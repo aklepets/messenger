@@ -33,7 +33,9 @@ clover {
 }
 dependencies {
     clover 'org.openclover:clover:4.4.1'
+    testImplementation 'org.mockito:mockito-core:5.8.0'
     testImplementation('org.junit.jupiter:junit-jupiter:5.6.2')
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.8.0'
     testRuntimeOnly ('org.junit.jupiter:junit-jupiter-engine:5.6.2')
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.6.2")
     testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.6.2")

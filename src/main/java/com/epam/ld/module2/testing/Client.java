@@ -1,5 +1,7 @@
 package com.epam.ld.module2.testing;
 
+import java.util.Map;
+
 /**
  * The type Client.
  */
@@ -15,6 +17,9 @@ public class Client {
         return addresses;
     }
 
+    public Map<String, String> getVariables(){
+        return null;
+    }
     /**
      * Sets addresses.
      *
