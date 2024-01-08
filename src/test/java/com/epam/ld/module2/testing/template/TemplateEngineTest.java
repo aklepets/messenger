@@ -32,7 +32,7 @@ public class TemplateEngineTest {
         variables.put("body", "Merry Christmas");
 
         when(client.getVariables()).thenReturn(variables);
-
+        when(template.getTemplateString()).thenReturn("#{subject} - #{body}");
         String message = templateEngine.generateMessage(template, client);
 
         assertEquals(message, "hello! - Merry Christmas");
