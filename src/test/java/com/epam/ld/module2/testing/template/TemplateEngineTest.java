@@ -34,7 +34,12 @@ public class TemplateEngineTest {
 
         when(client.getVariables()).thenReturn(variables);
         when(template.getTemplateString()).thenReturn("#{subject} - #{body}");
-        String message = templateEngine.generateMessage(template, client);
+        String message = null;
+        try {
+            message = templateEngine.generateMessage(template, client);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         assertEquals(message, "hello! - Merry Christmas");
     }
@@ -50,7 +55,7 @@ public class TemplateEngineTest {
         when(client.getVariables()).thenReturn(variables);
         when(template.getTemplateString()).thenReturn("#{subject} - #{body}");
 
-        assertThrows(Exception.class,
+        assertThrows(IllegalArgumentException.class,
                 ()-> {templateEngine.generateMessage(template, client);}
         );
     }
