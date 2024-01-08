@@ -59,4 +59,26 @@ public class TemplateEngineTest {
                 ()-> {templateEngine.generateMessage(template, client);}
         );
     }
+
+    @Test
+    @DisplayName("The Template Engine ignores extra variable placeholders from a template.")
+    public void extraMessagePlaceholdersAreIgnored(){
+        TemplateEngine templateEngine = new TemplateEngine();
+        Map<String, String> variables = new HashMap<>();
+        variables.put("subject", "hello!");
+        variables.put("body", "Merry Christmas");
+        variables.put("topic", "Happy New Year");
+
+        when(client.getVariables()).thenReturn(variables);
+        when(template.getTemplateString()).thenReturn("#{subject} - #{body}");
+        String message = null;
+        try {
+            message = templateEngine.generateMessage(template, client);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        assertEquals(message, "hello! - Merry Christmas");
+    }
+
 }

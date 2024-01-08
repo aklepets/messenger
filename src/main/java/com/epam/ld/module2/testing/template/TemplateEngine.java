@@ -23,9 +23,9 @@ public class TemplateEngine {
             templateString = templateString.replace("#{"+entry.getKey()+"}", entry.getValue());
         }
 
-        if(Pattern.matches("\\#\\{.+}", templateString)){
+        if(templateString.matches(".*#\\{\\w*\\}.*")) {
             throw new IllegalArgumentException("some parameters missing");
-        };
+        }
 
         return templateString;
     }
