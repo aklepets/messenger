@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -36,5 +37,21 @@ public class TemplateEngineTest {
         String message = templateEngine.generateMessage(template, client);
 
         assertEquals(message, "hello! - Merry Christmas");
+    }
+
+    @Test
+    @DisplayName("The Template Engine throws an exception if at least one placeholder value is missed")
+    public void exceptionIsThrownIfPlaceholderValueMissed(){
+        TemplateEngine templateEngine = new TemplateEngine();
+        Map<String, String> variables = new HashMap<>();
+        variables.put("subject", "hello!");
+//        body parameter is missing
+
+        when(client.getVariables()).thenReturn(variables);
+        when(template.getTemplateString()).thenReturn("#{subject} - #{body}");
+
+        assertThrows(Exception.class,
+                ()-> {templateEngine.generateMessage(template, client);}
+        );
     }
 }
