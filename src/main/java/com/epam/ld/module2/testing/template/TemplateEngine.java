@@ -16,7 +16,7 @@ public class TemplateEngine {
      * @param client   the client
      * @return the string
      */
-    public String generateMessage(Template template, Client client) throws Exception {
+    public String generateMessage(Template template, Client client) throws IllegalArgumentException {
         String templateString = template.getTemplateString();
         String templateStringClean = template.getTemplateString();
 
@@ -25,7 +25,7 @@ public class TemplateEngine {
             templateStringClean = templateString.replace(entry.getValue(), "");
         }
 
-        if(templateStringClean.matches(".*#\\{\\w*\\}.*")) {
+        if(templateStringClean.matches(".*#\\{\\w*}.*")) {
             throw new IllegalArgumentException("some parameters missing");
         }
 

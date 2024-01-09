@@ -11,8 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -34,14 +33,9 @@ public class TemplateEngineTest {
 
         when(client.getVariables()).thenReturn(variables);
         when(template.getTemplateString()).thenReturn("#{subject} - #{body}");
-        String message = null;
-        try {
-            message = templateEngine.generateMessage(template, client);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        assertEquals(message, "hello! - Merry Christmas");
+        String actual = assertDoesNotThrow(() -> templateEngine.generateMessage(template, client));
+        String expected = "hello! - Merry Christmas";
+        assertEquals(actual, expected);
     }
 
     @Test
@@ -56,13 +50,13 @@ public class TemplateEngineTest {
         when(template.getTemplateString()).thenReturn("#{subject} - #{body}");
 
         assertThrows(IllegalArgumentException.class,
-                ()-> {templateEngine.generateMessage(template, client);}
+                ()-> templateEngine.generateMessage(template, client)
         );
     }
 
     @Test
     @DisplayName("The Template Engine ignores extra variable placeholders from a template.")
-    public void extraMessagePlaceholdersAreIgnored(){
+    public void extraMessagePlaceholdersAreIgnored() {
         TemplateEngine templateEngine = new TemplateEngine();
         Map<String, String> variables = new HashMap<>();
         variables.put("subject", "hello!");
@@ -71,14 +65,8 @@ public class TemplateEngineTest {
 
         when(client.getVariables()).thenReturn(variables);
         when(template.getTemplateString()).thenReturn("#{subject} - #{body}");
-        String message = null;
-        try {
-            message = templateEngine.generateMessage(template, client);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        assertEquals(message, "hello! - Merry Christmas");
+        String expected = "hello! - Merry Christmas";
+        String actual = assertDoesNotThrow(() -> templateEngine.generateMessage(template, client));
+        assertEquals(expected, actual);
     }
-
 }
