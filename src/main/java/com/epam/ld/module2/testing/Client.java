@@ -1,6 +1,8 @@
 package com.epam.ld.module2.testing;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 /**
  * The type Client.
@@ -18,7 +20,22 @@ public class Client {
     }
 
     public Map<String, String> getVariables(){
-        return null;
+        Map<String, String> variables = new HashMap<>();
+
+        Scanner scanner = new Scanner(System.in);
+        boolean enterParameters = true;
+        while(enterParameters) {
+            System.out.println("enter parameter name");
+            String key = scanner.nextLine();
+            System.out.println("enter parameter value");
+            String value = scanner.nextLine();
+            variables.put(key, value);
+            System.out.println("want enter more parameters? [y, yes]");
+            String yes = scanner.nextLine();
+            enterParameters = (yes.contains("y"));
+        }
+        scanner.close();
+        return variables;
     }
     /**
      * Sets addresses.
