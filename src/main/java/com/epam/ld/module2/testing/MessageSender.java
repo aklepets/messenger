@@ -8,8 +8,14 @@ public class MessageSender {
         MailServer mailServer = new MailServer();
         TemplateEngine templateEngine = new TemplateEngine();
         Messenger messenger = new Messenger(mailServer, templateEngine);
-        Client client = new Client();
         Template template = new Template();
-        messenger.sendMessage(client, template);
+        Client client;
+        if (args.length!=0) {
+            client = new ClientFile(args[0]);
+            messenger.sendMessage(client, template, args[1]);
+        } else {
+            client = new Client();
+            messenger.sendMessage(client, template);
+        }
     }
 }
